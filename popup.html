@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MYA FOCUS!</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="manifest" crossorigin="use-credentials" href="/manifest.json">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+        <link rel="apple-touch-startup-image" href="icon_128.png.png">
+        <link rel="apple-touch-icon" href="icon_48.png.png">
+        <link rel="icon" href="icon_16.png.png">
+    </head>
+    <body class="body">
+        <div id="options">
+            <button onclick="library()">Library</button>
+            <button onclick="beach()">Beach</button>
+            <button onclick="woods()">Woods</button>
+            <button onclick="cafe()">Cafe</button>
+            <button onclick="meditation()">Meditation</button>
+            <button onclick="piano()">Piano</button>
+        <script src="background.js"></script>
+    </div>
+    <div class="timer">
+        <script>
+            let workSeconds = 120, breakSeconds = 60;
+            let Interval;
+            function start() {
+                Interval = setInterval(workCountDown, 1000);
+            }
+            function stop() {
+                    clearInterval(Interval);
+                    Interval = null;
+                    document.querySelector('#timer').innerHTML = '00:00';
+
+            }
+            function reset() {
+                    save();
+                    start();
+            }
+            function save() {
+                    workSeconds = parseInt(document.getElementById("workMinutes").value)*60;
+                    breakMinutes = parseInt(document.getElementById("breakMinutes").value)*60;
+            }
+            function workCountDown() {
+                    workSeconds--;
+                    document.getElementById("timer").innerText = Math.floor((workSeconds / 60)).toString() + ":" + (workSeconds % 60).toString();
+                    if (workSeconds == 0) {
+                        document.querySelector('#feedback2').innerHTML = 'Break time!';
+                        clearInterval(Interval);
+                        Interval = setInterval(breakCountDown, 1000);
+                    }
+            }
+            function breakCountDown() {
+                    breakSeconds--;
+                    document.getElementById("timer").innerText = Math.floor((breakSeconds / 60)).toString() + ":" + (breakSeconds % 60).toString();
+                    if (breakSeconds == 0) {
+                        document.querySelector('#feedback2').innerHTML = 'Work time!';
+                         reset();
+                    }
+            }
+        </script>
+          <p id="timer">00:00</p>
+          <p id="feedback2"></p>
+          <br />
+          <button onclick="start()">Start</button>
+          <button onclick="stop()">Stop</button>
+          <button onclick="reset()">Reset</button>
+          <button id="pause">Pause Audio</button>
+          <br />
+          <input type="number" id="workMinutes" value="0" max="120" min="0"><br />
+          <span>work minutes</span>
+          <br />
+          <input type="number" id="breakMinutes" value="0" max="30" min="0"><br />
+          <span>break minutes</span>
+          <br />
+          <button onclick="save()">Save</button>
+    </div>
+        <div id="review">
+            <footer>
+            <p>Did you enjoy our website?</p>
+            <button class="good">YES!</button>
+            <button class="notgood">NO</button>
+            <p id="feedback"></p>
+            </footer>
+         <script>
+                document.addEventListener('DOMContentLoaded', function(){
+                  document.querySelector('.notgood').addEventListener('click', function(){
+                        document.querySelector('#feedback').innerHTML = 'Oh sorry we did not meet your expectations😔';
+                    });
+                  document.querySelector('.good').addEventListener('click', function(){
+                        document.querySelector('#feedback').innerHTML = 'YAY!😍';
+                    });
+               });
+            </script>
+        </div>
+    </body>
+</html>
